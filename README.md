@@ -36,6 +36,31 @@
 
 ---
 
+## 当前开发工具与 AI
+
+### 日常开发工具（维护本仓库时的典型环境）
+
+| 类型 | 说明 |
+|------|------|
+| **IDE** | [Cursor](https://cursor.com)（基于 VS Code），便于 TypeScript、Tailwind、Git 与内置终端一体使用；也可用 [VS Code](https://code.visualstudio.com) 打开同一仓库 |
+| **操作系统** | Windows 10+（本机开发与调试） |
+| **终端 / Shell** | **PowerShell**；需要运行 Bash 脚本或规避 Shell 转义问题时，可使用 **Git for Windows** 自带的 **Git Bash** |
+| **运行时与包管理** | **Node.js**（建议使用 [Current / LTS](https://nodejs.org/)）、**npm** |
+| **版本控制** | **Git**（本地提交、SSH 远程 `origin` 等） |
+
+### AI 辅助与模型说明
+
+| 项目 | 说明 |
+|------|------|
+| **AI 产品** | **Cursor** 内置能力：**Chat**、**Agent（代理）**、**Composer** 等，用于补全、重构、写文档与执行终端命令链 |
+| **模型如何确定** | 具体 **大模型名称与版本** 由 Cursor **账户、订阅与「设置 → 模型」** 决定，会随 Cursor 产品更新而变化；团队开发时建议在组织内约定默认模型，便于评审与风格一致 |
+| **路由 / Auto** | 若在 Cursor 中选择 **Auto（自动）**，则由 **Cursor 的路由逻辑**在可用模型间分配请求，而不固定为某一个底层型号 |
+| **本 README 维护示例** | 文稿与部分仓库操作在 **Cursor Agent** 对话中完成；对话侧展示为 Cursor **Agent + Auto 路由**（底层实际模型以你当时 Cursor 界面所选为准） |
+
+> 若需在文档中固定记录「团队默认模型」，请把实际在 Cursor 里选用的模型名（如某款 Claude / GPT 等）写进团队规范或本段表格，并随 Cursor 升级定期核对。
+
+---
+
 ## 内容目录结构
 
 ```
