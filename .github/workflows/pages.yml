@@ -1,6 +1,7 @@
-name: Deploy GitHub Pages
+# GitHub 官方 Pages 方式：不创建 gh-pages 分支，由 Actions 上传构建产物并发布。
+# 仓库 Settings → Pages → Build and deployment → Source 选「GitHub Actions」（仅需选一次）。
 
-# 将静态产物推送到 gh-pages 分支，在仓库 Settings → Pages 中选择该分支即可托管。
+name: Deploy GitHub Pages
 
 on:
   push:
@@ -8,14 +9,16 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
+  pages: write
+  id-token: write
 
 concurrency:
-  group: gh-pages-deploy
-  cancel-in-progress: true
+  group: pages
+  cancel-in-progress: false
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -33,10 +36,16 @@ jobs:
           NEXT_BASE_PATH: /ai-bike
         run: npm run build
 
-      - name: Push to gh-pages branch
-        uses: peaceiris/actions-gh-pages@v4
+      - uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./out
-          publish_branch: gh-pages
-          force_orphan: true
+          path: out
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
