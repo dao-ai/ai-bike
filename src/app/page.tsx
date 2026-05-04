@@ -1,65 +1,92 @@
-import Image from "next/image";
+import Link from "next/link";
+import { CardGrid } from "@/components/CardGrid";
+import {
+  getAllBrands,
+  getAllCategories,
+  getAllModels,
+} from "@/lib/content";
 
 export default function Home() {
+  const categories = getAllCategories();
+  const brands = getAllBrands();
+  const models = getAllModels();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
+    <div className="space-y-14">
+      <section className="rounded-2xl border border-[var(--edge)] bg-[var(--surface)] p-8 shadow-sm sm:p-10">
+        <p className="text-sm font-medium text-[var(--accent)]">Bike knowledge</p>
+        <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
+          分类、品牌、型号与咨询，一站整理
+        </h1>
+        <p className="mt-4 max-w-2xl text-base leading-relaxed text-[var(--muted)]">
+          本站用 Next.js App Router 搭建，所有条目来自项目根目录{" "}
+          <code className="rounded bg-[var(--surface-2)] px-1.5 py-0.5 font-mono text-sm">
+            content/
+          </code>{" "}
+          下的 Markdown（frontmatter + 正文），直接编辑即可更新站点。
+        </p>
+        <dl className="mt-8 grid gap-4 sm:grid-cols-3">
+          <div className="rounded-lg bg-[var(--surface-2)] px-4 py-3">
+            <dt className="text-xs text-[var(--muted)]">分类</dt>
+            <dd className="text-2xl font-semibold tabular-nums">
+              {categories.length}
+            </dd>
+          </div>
+          <div className="rounded-lg bg-[var(--surface-2)] px-4 py-3">
+            <dt className="text-xs text-[var(--muted)]">品牌</dt>
+            <dd className="text-2xl font-semibold tabular-nums">{brands.length}</dd>
+          </div>
+          <div className="rounded-lg bg-[var(--surface-2)] px-4 py-3">
+            <dt className="text-xs text-[var(--muted)]">型号</dt>
+            <dd className="text-2xl font-semibold tabular-nums">{models.length}</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section>
+        <h2 className="mb-4 text-lg font-semibold">快速入口</h2>
+        <CardGrid
+          items={[
+            {
+              href: "/categories",
+              title: "按车型分类",
+              subtitle: "山地、公路、Gravel、通勤与电助力等说明与要点。",
+            },
+            {
+              href: "/brands",
+              title: "品牌索引",
+              subtitle: "整车厂牌简介与官网入口。",
+            },
+            {
+              href: "/models",
+              title: "型号库",
+              subtitle: "按品牌与分类筛选的代表车款条目。",
+            },
+            {
+              href: "/consult",
+              title: "咨询与问答",
+              subtitle: "选购、保养与车型辨析的常见问题。",
+            },
+          ]}
         />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+      </section>
+
+      <section className="rounded-xl border border-dashed border-[var(--edge)] p-6 text-sm text-[var(--muted)]">
+        <p>
+          本地开发：在项目目录执行{" "}
+          <code className="rounded bg-[var(--surface-2)] px-1.5 py-0.5 font-mono text-[var(--foreground)]">
+            npm run dev
+          </code>
+          。部署可选用{" "}
+          <Link
+            className="font-medium text-[var(--accent)] underline-offset-2 hover:underline"
+            href="https://vercel.com/docs/frameworks/nextjs"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
+            Vercel
+          </Link>{" "}
+          或其他支持 Next.js 的平台。
+        </p>
+      </section>
     </div>
   );
 }

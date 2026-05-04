@@ -1,26 +1,151 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f4f6f4;
+  --foreground: #0f1a14;
+  --surface: #ffffff;
+  --surface-2: #e8efe9;
+  --muted: #4a5c52;
+  --accent: #1b6b4f;
+  --accent-2: #c45c1a;
+  --edge: #d5e0d8;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0b100d;
+    --foreground: #e9f1eb;
+    --surface: #121a16;
+    --surface-2: #1a2620;
+    --muted: #9cb0a4;
+    --accent: #3ecf9a;
+    --accent-2: #f0a06c;
+    --edge: #24332a;
   }
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family:
+    system-ui,
+    -apple-system,
+    "Segoe UI",
+    Roboto,
+    "Noto Sans SC",
+    "PingFang SC",
+    "Microsoft YaHei",
+    sans-serif;
+}
+
+/* Markdown 正文（react-markdown 输出） */
+.md-body {
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--foreground);
+}
+
+.md-body > :first-child {
+  margin-top: 0;
+}
+
+.md-body > :last-child {
+  margin-bottom: 0;
+}
+
+.md-body h1,
+.md-body h2,
+.md-body h3 {
+  margin-top: 1.25em;
+  margin-bottom: 0.5em;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.md-body h1 {
+  font-size: 1.25rem;
+}
+
+.md-body h2 {
+  font-size: 1.1rem;
+}
+
+.md-body h3 {
+  font-size: 1rem;
+}
+
+.md-body p {
+  margin: 0.75em 0;
+}
+
+.md-body ul,
+.md-body ol {
+  margin: 0.75em 0;
+  padding-left: 1.35em;
+}
+
+.md-body li {
+  margin: 0.25em 0;
+}
+
+.md-body a {
+  color: var(--accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.md-body a:hover {
+  opacity: 0.9;
+}
+
+.md-body code {
+  font-size: 0.88em;
+  padding: 0.15em 0.4em;
+  border-radius: 0.25rem;
+  background: var(--surface-2);
+}
+
+.md-body pre {
+  margin: 1em 0;
+  padding: 1rem;
+  overflow-x: auto;
+  border-radius: 0.5rem;
+  border: 1px solid var(--edge);
+  background: var(--surface);
+  font-size: 0.8125rem;
+}
+
+.md-body pre code {
+  padding: 0;
+  background: none;
+}
+
+.md-body blockquote {
+  margin: 1em 0;
+  padding-left: 1em;
+  border-left: 3px solid var(--accent);
+  color: var(--muted);
+}
+
+.md-body table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1em 0;
+  font-size: 0.875rem;
+}
+
+.md-body th,
+.md-body td {
+  border: 1px solid var(--edge);
+  padding: 0.5rem 0.65rem;
+  text-align: left;
+}
+
+.md-body th {
+  background: var(--surface-2);
 }
