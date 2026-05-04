@@ -97,6 +97,12 @@ npm run lint    # ESLint
 $env:NEXT_BASE_PATH="/ai-bike"; npm run build
 ```
 
+或模拟 CI（与仓库名一致时等价于 `/ai-bike`）：
+
+```powershell
+$env:GITHUB_ACTIONS="true"; $env:GITHUB_REPOSITORY="dao-ai/ai-bike"; npm run build
+```
+
 再用任意静态文件服务器打开 `out` 目录（`npx serve out` 等），从 `/ai-bike/` 路径访问。
 
 > 仓库已启用 `output: "export"`，**不再使用** `next start` 提供生产服务；线上以静态文件托管为准。
@@ -109,13 +115,14 @@ $env:NEXT_BASE_PATH="/ai-bike"; npm run build
 
 这是 GitHub 当前推荐的静态站点方式：**不会生成 `gh-pages` 分支**，由工作流上传 `out/` 工件并由 Pages 发布（与许多模板 / Codex 默认行为一致）。
 
-- **工作流**：`.github/workflows/pages.yml` — `npm ci` → `npm run build`（`NEXT_BASE_PATH=/ai-bike`）→ `actions/upload-pages-artifact` → `actions/deploy-pages`。
+- **工作流**：`.github/workflows/pages.yml` — `npm ci` → `npm run build` → `actions/upload-pages-artifact` → `actions/deploy-pages`（构建日志中含一步校验 `out/index.html` 与 `out/_next`）。
 - **线上地址**：[https://dao-ai.github.io/ai-bike/](https://dao-ai.github.io/ai-bike/)
 - **只需配置一次**  
   打开仓库 **Settings → Pages**，在 **Build and deployment** 里把 **Source** 设为 **GitHub Actions**（不要选「Deploy from a branch」）。保存后推送 `master`/`main` 或手动运行工作流即可。  
   一般 **不需要** 把 Actions 的 Workflow permissions 改成「Read and write」（本工作流用 `pages: write` + `id-token: write` 发布，不向仓库推分支）。  
   若组织策略要求 **首次** 审批 `github-pages` 环境，到 **Actions** 里通过一次即可。
-- **路径**：CI 中设置 `NEXT_BASE_PATH=/ai-bike`，与 `https://<org>.github.io/<仓库名>/` 一致；`public/.nojekyll` 避免 Jekyll 忽略 `_next`。
+- **路径**：在 **GitHub Actions** 构建时由 `next.config.ts` 根据 `GITHUB_REPOSITORY` 自动设置 `basePath`（形如 `/ai-bike`），与 `https://<org>.github.io/<仓库名>/` 一致；也可用环境变量 `NEXT_BASE_PATH` 覆盖。`public/.nojekyll` 避免 Jekyll 忽略 `_next`。
+- **若浏览器整站 404（GitHub 默认 404 页）**：通常是 **尚未成功发布**，请打开 **Actions → Deploy GitHub Pages** 查看最新运行是否全部成功；**deploy** 若卡在「Waiting for approval」，到 **Settings → Environments → github-pages** 关闭保护规则或完成审批。另请确认组织未禁用 Pages、仓库为 **Public**（免费账户下私有仓库的 Pages 策略可能受限）。
 
 ### 其他平台
 
