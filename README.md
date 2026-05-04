@@ -105,12 +105,15 @@ $env:NEXT_BASE_PATH="/ai-bike"; npm run build
 
 ## 部署
 
-### GitHub Pages（本仓库已配置）
+### GitHub Pages（`gh-pages` 分支）
 
-- **工作流**：`.github/workflows/pages.yml` — 在 `master` / `main` 推送时执行 `npm ci` + `npm run build`（`NEXT_BASE_PATH=/ai-bike`），将 `out/` 部署到 GitHub Pages。
+- **工作流**：`.github/workflows/pages.yml` — 在 `master` / `main` 推送时执行 `npm ci` + `npm run build`（`NEXT_BASE_PATH=/ai-bike`），用 [peaceiris/actions-gh-pages](https://github.com/peaceiris/actions-gh-pages) 把 **`out/` 整目录推送到 `gh-pages` 分支**（`force_orphan: true`，该分支仅保留最新一次提交，避免历史膨胀）。
 - **线上地址**（组织仓库）：[https://dao-ai.github.io/ai-bike/](https://dao-ai.github.io/ai-bike/)
-- **首次启用**：在 GitHub 仓库 **Settings → Pages** 中，将 **Build and deployment → Source** 设为 **GitHub Actions**（不要再用 branch 部署 `docs`/`gh-pages` 分支，以免冲突）。
-- **根目录**：`next.config.ts` 在设置了 `NEXT_BASE_PATH` 时会配置 `basePath`，与 `https://<user>.github.io/<repo>/` 的路径一致；`public/.nojekyll` 避免 Jekyll 忽略 `_next` 等目录。
+- **首次启用（必做）**  
+  1. **Settings → Pages → Build and deployment**：Source 选 **Deploy from a branch**，Branch 选 **`gh-pages`**，文件夹选 **`/ (root)`**。  
+  2. **Settings → Actions → General → Workflow permissions**：选 **Read and write permissions**（否则 `GITHUB_TOKEN` 无法推送 `gh-pages`）。  
+  3. 推送任意提交到 `master`/`main`，或到 **Actions** 里手动运行 **Deploy GitHub Pages**。成功后仓库会出现 **`gh-pages` 分支**，Pages 即开始托管。
+- **路径**：`next.config.ts` 在 CI 中设置 `basePath: /ai-bike`，与 `https://<org>.github.io/<仓库名>/` 一致；`public/.nojekyll` 避免 Jekyll 忽略 `_next`。
 
 ### 其他平台
 
