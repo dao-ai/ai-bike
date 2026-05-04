@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
+import { filterModelList } from "./filterModels";
 import type { Brand, Category, ConsultItem, Model } from "./types";
 
 const ROOT = path.join(process.cwd(), "content");
@@ -176,14 +177,7 @@ export function filterModels(opts: {
   categorySlug?: string;
   brandSlug?: string;
 }): Model[] {
-  let list = getAllModels();
-  if (opts.categorySlug) {
-    list = list.filter((m) => m.categorySlugs.includes(opts.categorySlug!));
-  }
-  if (opts.brandSlug) {
-    list = list.filter((m) => m.brandSlug === opts.brandSlug!);
-  }
-  return list;
+  return filterModelList(getAllModels(), opts);
 }
 
 export function getAllConsultItems(): ConsultItem[] {

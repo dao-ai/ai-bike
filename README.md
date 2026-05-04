@@ -23,7 +23,7 @@
 
 | 类别 | 选用 |
 |------|------|
-| **框架** | [Next.js](https://nextjs.org) **16**（App Router、`app/` 目录） |
+| **框架** | [Next.js](https://nextjs.org) **16**（App Router、`app/` 目录、`output: "export"` 静态导出至 `out/`） |
 | **UI** | [React](https://react.dev) **19**、[React DOM](https://react.dev) **19** |
 | **语言** | [TypeScript](https://www.typescriptlang.org) **5** |
 | **样式** | [Tailwind CSS](https://tailwindcss.com) **4**（`@tailwindcss/postcss`）、自定义 CSS 变量与 `globals.css` 中的 Markdown 排版类 |
@@ -87,16 +87,36 @@ npm run dev
 其他常用命令：
 
 ```bash
-npm run build   # 生产构建
-npm run start   # 本地运行构建产物
+npm run build   # 静态导出到 out/（默认无 basePath，便于本地打开）
 npm run lint    # ESLint
 ```
+
+本地预览 **GitHub Pages 同款路径**（带 `/ai-bike` 前缀）时，构建前设置环境变量，例如 PowerShell：
+
+```powershell
+$env:NEXT_BASE_PATH="/ai-bike"; npm run build
+```
+
+再用任意静态文件服务器打开 `out` 目录（`npx serve out` 等），从 `/ai-bike/` 路径访问。
+
+> 仓库已启用 `output: "export"`，**不再使用** `next start` 提供生产服务；线上以静态文件托管为准。
 
 ---
 
 ## 部署
 
-可部署到 [Vercel](https://vercel.com/docs/frameworks/nextjs) 或其他支持 Node.js 与 Next.js 的平台。确保构建环境能访问仓库中的 `content/` 文件（随代码一同发布即可）。
+### GitHub Pages（本仓库已配置）
+
+- **工作流**：`.github/workflows/pages.yml` — 在 `master` / `main` 推送时执行 `npm ci` + `npm run build`（`NEXT_BASE_PATH=/ai-bike`），将 `out/` 部署到 GitHub Pages。
+- **线上地址**（组织仓库）：[https://dao-ai.github.io/ai-bike/](https://dao-ai.github.io/ai-bike/)
+- **首次启用**：在 GitHub 仓库 **Settings → Pages** 中，将 **Build and deployment → Source** 设为 **GitHub Actions**（不要再用 branch 部署 `docs`/`gh-pages` 分支，以免冲突）。
+- **根目录**：`next.config.ts` 在设置了 `NEXT_BASE_PATH` 时会配置 `basePath`，与 `https://<user>.github.io/<repo>/` 的路径一致；`public/.nojekyll` 避免 Jekyll 忽略 `_next` 等目录。
+
+### 其他平台
+
+也可将 `out/` 目录上传到任意静态托管（S3、Cloudflare Pages、Netlify 等）。若站点挂在子路径下，构建时同样设置 `NEXT_BASE_PATH` 为对应前缀（勿带尾部斜杠）。
+
+[Vercel](https://vercel.com/docs/frameworks/nextjs) 等若使用 **SSR** 而非纯静态导出，需去掉 `output: "export"` 并改用适配该平台的 Next 部署方式（与本仓库当前默认不同）。
 
 ---
 
