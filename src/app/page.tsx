@@ -77,14 +77,22 @@ export default function Home() {
           <code className="rounded bg-[var(--surface-2)] px-1.5 py-0.5 font-mono text-[var(--foreground)]">
             npm run dev
           </code>
-          。部署可选用{" "}
+          ；静态站点构建执行{" "}
+          <code className="rounded bg-[var(--surface-2)] px-1.5 py-0.5 font-mono text-[var(--foreground)]">
+            npm run build
+          </code>
+          （产物在{" "}
+          <code className="rounded bg-[var(--surface-2)] px-1.5 py-0.5 font-mono text-[var(--foreground)]">
+            out/
+          </code>
+          ）。公开站点见{" "}
           <Link
             className="font-medium text-[var(--accent)] underline-offset-2 hover:underline"
-            href="https://vercel.com/docs/frameworks/nextjs"
+            href="https://dao-ai.github.io/ai-bike/"
           >
-            Vercel
-          </Link>{" "}
-          或其他支持 Next.js 的平台。
+            GitHub Pages
+          </Link>
+          。
         </p>
       </section>
     </div>
