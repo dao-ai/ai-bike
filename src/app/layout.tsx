@@ -22,9 +22,20 @@ export default function RootLayout({
         <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
           {children}
         </main>
-        <footer className="footer footer-center border-t border-base-300 bg-base-100 p-6 text-sm text-base-content/60">
-          <aside>
-            <p>内容源：content/**/*.md · Next.js App Router · daisyUI</p>
+        <footer className="footer footer-center border-t border-base-300 bg-base-100 px-4 py-8 text-sm text-base-content/70">
+          <aside className="max-w-2xl space-y-3 leading-relaxed">
+            <p className="text-base text-base-content">
+              <span className="badge badge-primary badge-outline mr-2 align-middle">
+                AI 辅助开发
+              </span>
+              本站<strong className="font-semibold text-primary">主要界面与工程代码由人工智能自动辅助生成</strong>
+              （Cursor 等 Agent / 对话式编程），在人工审阅与迭代中持续完善，并非传统纯手工从零撰写。
+            </p>
+            <p className="text-xs text-base-content/60">
+              知识条目数据来自仓库{" "}
+              <kbd className="kbd kbd-sm align-middle">content/</kbd>{" "}
+              下 Markdown；技术栈：Next.js App Router、daisyUI、Tailwind CSS。
+            </p>
           </aside>
         </footer>
       </body>
