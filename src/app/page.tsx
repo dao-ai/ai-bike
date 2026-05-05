@@ -28,24 +28,43 @@ export default function Home() {
               正文），直接编辑即可更新站点。
             </p>
           </div>
-          <div className="stats stats-vertical mt-8 w-full max-w-2xl shadow-sm sm:stats-horizontal">
-            <div className="stat border border-base-300 bg-base-100 place-items-start rounded-box px-6 py-4">
-              <div className="stat-title text-xs uppercase tracking-wide">
-                分类
+          <div className="card mt-8 w-full max-w-2xl border border-base-300 bg-base-100/95 shadow-md backdrop-blur-sm">
+            <div className="card-body p-0">
+              <div className="stats stats-vertical w-full divide-y divide-base-200 sm:stats-horizontal sm:divide-x sm:divide-y-0">
+                <div className="stat place-items-center px-4 py-6 text-center sm:py-8">
+                  <div className="stat-title text-xs font-semibold uppercase tracking-wider text-base-content/50">
+                    分类
+                  </div>
+                  <div className="stat-value text-primary tabular-nums">
+                    {categories.length}
+                  </div>
+                  <div className="stat-desc max-w-[10rem] text-xs leading-snug">
+                    车型大类
+                  </div>
+                </div>
+                <div className="stat place-items-center px-4 py-6 text-center sm:py-8">
+                  <div className="stat-title text-xs font-semibold uppercase tracking-wider text-base-content/50">
+                    品牌
+                  </div>
+                  <div className="stat-value text-primary tabular-nums">
+                    {brands.length}
+                  </div>
+                  <div className="stat-desc max-w-[10rem] text-xs leading-snug">
+                    整车厂牌
+                  </div>
+                </div>
+                <div className="stat place-items-center px-4 py-6 text-center sm:py-8">
+                  <div className="stat-title text-xs font-semibold uppercase tracking-wider text-base-content/50">
+                    型号
+                  </div>
+                  <div className="stat-value text-primary tabular-nums">
+                    {models.length}
+                  </div>
+                  <div className="stat-desc max-w-[10rem] text-xs leading-snug">
+                    车款条目
+                  </div>
+                </div>
               </div>
-              <div className="stat-value text-primary">{categories.length}</div>
-            </div>
-            <div className="stat border border-base-300 bg-base-100 place-items-start rounded-box px-6 py-4">
-              <div className="stat-title text-xs uppercase tracking-wide">
-                品牌
-              </div>
-              <div className="stat-value text-primary">{brands.length}</div>
-            </div>
-            <div className="stat border border-base-300 bg-base-100 place-items-start rounded-box px-6 py-4">
-              <div className="stat-title text-xs uppercase tracking-wide">
-                型号
-              </div>
-              <div className="stat-value text-primary">{models.length}</div>
             </div>
           </div>
         </div>
