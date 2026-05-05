@@ -1,0 +1,52 @@
+{
+  "source": "https://www.merida.cn/",
+  "fetchedNote": "全车系主导航（MTB / ROAD / 城市运动·休闲 / 长途旅行 / 青少年）中的产品线名称；官网随产品迭代可能增删改名，请以 merida.cn 为准。",
+  "groups": [
+    {
+      "id": "mtb",
+      "name": "MTB登山车",
+      "series": [
+        { "name": "ONE-SIXTY", "slug": "one-sixty" },
+        { "name": "NINETY-SIX", "slug": "ninety-six" },
+        { "name": "BIG-NINE", "slug": "big-nine" },
+        { "name": "DIRT", "slug": "merida-dirt" },
+        { "name": "挑战者系列", "slug": "merida-challenger" },
+        { "name": "公爵系列", "slug": "merida-duke" },
+        { "name": "勇士系列", "slug": "merida-warrior" },
+        { "name": "骑士系列", "slug": "merida-knight" },
+        { "name": "维多利亚系列", "slug": "merida-victoria" },
+        { "name": "伊利特", "slug": "merida-ilit" }
+      ]
+    },
+    {
+      "id": "road",
+      "name": "ROAD 公路车",
+      "series": [
+        { "name": "SCULTURA ENDURANCE", "slug": "scultura-endurance" },
+        { "name": "REACTO", "slug": "reacto" },
+        { "name": "SCULTURA", "slug": "scultura" },
+        { "name": "SILEX", "slug": "silex" }
+      ]
+    },
+    {
+      "id": "urban",
+      "name": "城市运动/休闲车",
+      "series": [
+        { "name": "史匹得系列", "slug": "merida-speeder" },
+        { "name": "探索者系列", "slug": "merida-explorer" },
+        { "name": "克罗威系列", "slug": "merida-crossway" },
+        { "name": "代步车系列", "slug": "merida-commuter" }
+      ]
+    },
+    {
+      "id": "touring",
+      "name": "长途旅行车",
+      "series": [{ "name": "旅行车", "slug": "merida-touring" }]
+    },
+    {
+      "id": "youth",
+      "name": "青少年车",
+      "series": [{ "name": "达卡系列", "slug": "merida-dakar" }]
+    }
+  ]
+}

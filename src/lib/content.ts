@@ -2,7 +2,8 @@ import fs from "node:fs";
 import path from "node:path";
 import matter from "gray-matter";
 import { filterModelList } from "./filterModels";
-import type { Brand, Category, ConsultItem, Model } from "./types";
+import { parseGeometryTable } from "./parseGeometryTable";
+import type { Brand, Category, ConsultItem, Model, Series } from "./types";
 
 const ROOT = path.join(process.cwd(), "content");
 
@@ -33,6 +34,19 @@ function optionalTrimmedString(v: unknown): string | undefined {
   return s ? s : undefined;
 }
 
+function asSpecAttributes(v: unknown): { label: string; value: string }[] | undefined {
+  if (!Array.isArray(v)) return undefined;
+  const out: { label: string; value: string }[] = [];
+  for (const item of v) {
+    if (item && typeof item === "object" && "label" in item && "value" in item) {
+      const label = String((item as { label: unknown }).label ?? "").trim();
+      const value = String((item as { value: unknown }).value ?? "").trim();
+      if (label && value) out.push({ label, value });
+    }
+  }
+  return out.length > 0 ? out : undefined;
+}
+
 function parseCategory(slug: string, raw: string): Category {
   const { data, content } = matter(raw);
   return {
@@ -57,12 +71,26 @@ function parseBrand(slug: string, raw: string): Brand {
   };
 }
 
+function parseSeries(slug: string, raw: string): Series {
+  const { data, content } = matter(raw);
+  return {
+    slug,
+    name: String(data.name ?? slug),
+    brandSlug: String(data.brand ?? ""),
+    categorySlugs: asStringArray(data.categories),
+    summary: String(data.summary ?? ""),
+    body: String(content ?? "").trim(),
+    officialModelsUrl: optionalTrimmedString(data.officialModelsUrl),
+  };
+}
+
 function parseModel(slug: string, raw: string): Model {
   const { data, content } = matter(raw);
   return {
     slug,
     name: String(data.name ?? slug),
     brandSlug: String(data.brand ?? ""),
+    seriesSlug: optionalTrimmedString(data.series),
     categorySlugs: asStringArray(data.categories),
     year: typeof data.year === "number" ? data.year : undefined,
     summary: String(data.summary ?? ""),
@@ -71,8 +99,11 @@ function parseModel(slug: string, raw: string): Model {
     msrp: optionalTrimmedString(data.msrp),
     productUrl: optionalTrimmedString(data.productUrl),
     sizesNote: optionalTrimmedString(data.sizesNote),
+    specAttributes: asSpecAttributes(data.specAttributes),
+    intendedUse: optionalTrimmedString(data.intendedUse),
     specsMd: optionalTrimmedString(data.specs),
     geometryMd: optionalTrimmedString(data.geometry),
+    geometryParsed: parseGeometryTable(optionalTrimmedString(data.geometry)),
     technologyMd: optionalTrimmedString(data.technology),
   };
 }
@@ -123,6 +154,10 @@ export function getModelSlugs(): string[] {
   return listMarkdownSlugs("models");
 }
 
+export function getSeriesSlugs(): string[] {
+  return listMarkdownSlugs("series");
+}
+
 export function getConsultIds(): string[] {
   return listMarkdownSlugs("consult");
 }
@@ -161,6 +196,23 @@ export function getBrand(slug: string): Brand | null {
   return parseBrand(slug, raw);
 }
 
+export function getAllSeries(): Series[] {
+  const slugs = getSeriesSlugs();
+  const items = slugs
+    .map((slug) => {
+      const raw = readFile("series", slug);
+      return raw ? parseSeries(slug, raw) : null;
+    })
+    .filter((x): x is Series => x !== null);
+  return sortByOrder(items, (s) => s.slug, (slug) => readOrder("series", slug));
+}
+
+export function getSeries(slug: string): Series | null {
+  const raw = readFile("series", slug);
+  if (!raw) return null;
+  return parseSeries(slug, raw);
+}
+
 export function getAllModels(): Model[] {
   const slugs = getModelSlugs();
   const items = slugs
@@ -180,6 +232,24 @@ export function getModel(slug: string): Model | null {
 
 export function modelsForBrand(brandSlug: string): Model[] {
   return getAllModels().filter((m) => m.brandSlug === brandSlug);
+}
+
+export function seriesForBrand(brandSlug: string): Series[] {
+  return getAllSeries().filter((s) => s.brandSlug === brandSlug);
+}
+
+export function modelsForSeries(seriesSlug: string): Model[] {
+  return getAllModels().filter((m) => m.seriesSlug === seriesSlug);
+}
+
+/** 各车系下已关联车款数量（仅统计 frontmatter 含 `series` 的 models） */
+export function modelCountsBySeriesSlug(): Record<string, number> {
+  const counts: Record<string, number> = {};
+  for (const model of getAllModels()) {
+    if (!model.seriesSlug) continue;
+    counts[model.seriesSlug] = (counts[model.seriesSlug] ?? 0) + 1;
+  }
+  return counts;
 }
 
 export function modelsForCategory(categorySlug: string): Model[] {

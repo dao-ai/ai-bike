@@ -1,0 +1,46 @@
+{
+  "source": "https://www.trekbikes.com/cn/zh_CN/",
+  "fetchedNote": "中国官网主导航为「公路自行车 / 山地车 / 混合自行车」等大类；下列车系为 Trek 全球市场常见产品线名称，与 CN 站各分类页的对应关系以官网当期菜单为准。",
+  "navHint": {
+    "road": "公路自行车",
+    "mountain": "山地车",
+    "hybrid": "混合自行车",
+    "equipment": "装备 / 服饰等不在本站车系列表范围"
+  },
+  "groups": [
+    {
+      "id": "road",
+      "name": "公路自行车（常见车系）",
+      "series": [
+        { "name": "Madone", "slug": "madone" },
+        { "name": "Émonda", "slug": "emonda" },
+        { "name": "Domane", "slug": "domane" },
+        { "name": "Checkpoint", "slug": "checkpoint" },
+        { "name": "Speed Concept", "slug": "speed-concept" },
+        { "name": "Crockett", "slug": "crockett" }
+      ]
+    },
+    {
+      "id": "mountain",
+      "name": "山地车（常见车系）",
+      "series": [
+        { "name": "Top Fuel", "slug": "top-fuel" },
+        { "name": "Fuel", "slug": "fuel" },
+        { "name": "Slash", "slug": "slash" },
+        { "name": "Marlin", "slug": "marlin" },
+        { "name": "Rail", "slug": "rail" },
+        { "name": "E-Caliber", "slug": "e-caliber" }
+      ]
+    },
+    {
+      "id": "hybrid",
+      "name": "混合 / 城市与青少年（常见车系）",
+      "series": [
+        { "name": "FX", "slug": "fx" },
+        { "name": "Dual Sport", "slug": "dual-sport" },
+        { "name": "Verve", "slug": "verve" },
+        { "name": "Precaliber", "slug": "precaliber" }
+      ]
+    }
+  ]
+}

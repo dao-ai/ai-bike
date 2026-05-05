@@ -4,8 +4,8 @@ import { getAllBrands, getAllCategories, getAllModels } from "@/lib/content";
 import { ModelsDirectory } from "./ModelsDirectory";
 
 export const metadata: Metadata = {
-  title: "型号",
-  description: "按品牌与分类筛选的型号库（Markdown 数据源）。",
+  title: "车款",
+  description: "按品牌、分类与关键词筛选；可选多辆并排对比并分享链接。",
 };
 
 function ModelsFallback() {

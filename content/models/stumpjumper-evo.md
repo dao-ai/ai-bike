@@ -1,6 +1,7 @@
 ---
 name: Stumpjumper EVO
 brand: specialized
+series: stumpjumper
 categories:
   - mountain
 year: 2024

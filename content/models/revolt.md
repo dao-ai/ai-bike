@@ -1,6 +1,7 @@
 ---
 name: Revolt
 brand: giant
+series: revolt
 categories:
   - gravel
 year: 2024

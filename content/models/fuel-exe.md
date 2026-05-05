@@ -1,6 +1,7 @@
 ---
 name: Fuel EXe
 brand: trek
+series: fuel
 categories:
   - mountain
   - ebike

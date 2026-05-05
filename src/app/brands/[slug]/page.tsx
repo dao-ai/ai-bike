@@ -1,9 +1,16 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
 import { MarkdownBody } from "@/components/MarkdownBody";
 import { SectionTitle } from "@/components/SectionTitle";
-import { getBrand, getBrandSlugs, modelsForBrand } from "@/lib/content";
+import { BrandDetailCategoryFilter } from "./BrandDetailCategoryFilter";
+import {
+  getAllCategories,
+  getBrand,
+  getBrandSlugs,
+  modelsForBrand,
+  seriesForBrand,
+} from "@/lib/content";
 
 type Props = { params: Promise<{ slug: string }> };
 
@@ -26,7 +33,17 @@ export default async function BrandDetailPage({ params }: Props) {
   const brand = getBrand(slug);
   if (!brand) notFound();
 
+  const seriesList = seriesForBrand(slug);
   const list = modelsForBrand(slug);
+
+  const categorySlugs = new Set<string>();
+  for (const m of list) {
+    for (const c of m.categorySlugs) categorySlugs.add(c);
+  }
+  for (const s of seriesList) {
+    for (const c of s.categorySlugs) categorySlugs.add(c);
+  }
+  const navCategories = getAllCategories().filter((c) => categorySlugs.has(c.slug));
 
   return (
     <article className="space-y-8">
@@ -56,32 +73,22 @@ export default async function BrandDetailPage({ params }: Props) {
         </section>
       ) : null}
 
-      <section>
-        <div className="mb-3 flex flex-wrap items-end justify-between gap-2">
-          <h2 className="text-xs font-bold uppercase tracking-wide text-base-content/60">
-            示例型号
-          </h2>
-          <Link
-            href={`/models?brand=${slug}`}
-            className="link link-primary text-sm font-medium"
-          >
-            型号库中只看该品牌 →
-          </Link>
-        </div>
-        <ul className="divide-y divide-base-300 overflow-hidden rounded-box border border-base-300 bg-base-100 shadow-sm">
-          {list.map((m) => (
-            <li key={m.slug}>
-              <Link
-                href={`/models/${m.slug}`}
-                className="block px-4 py-3 transition-colors hover:bg-base-200"
-              >
-                <div className="font-semibold text-base-content">{m.name}</div>
-                <div className="text-sm text-base-content/70">{m.summary}</div>
-              </Link>
-            </li>
-          ))}
-        </ul>
-      </section>
+      <Suspense
+        fallback={
+          <div className="space-y-8">
+            <div className="skeleton h-28 w-full rounded-box" />
+            <div className="skeleton h-40 w-full rounded-box" />
+            <div className="skeleton h-48 w-full rounded-box" />
+          </div>
+        }
+      >
+        <BrandDetailCategoryFilter
+          brandSlug={slug}
+          navCategories={navCategories.map((c) => ({ slug: c.slug, name: c.name }))}
+          seriesList={seriesList}
+          modelsList={list}
+        />
+      </Suspense>
     </article>
   );
 }

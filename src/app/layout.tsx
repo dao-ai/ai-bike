@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { SiteHeader } from "@/components/SiteHeader";
 import "./globals.css";
 
@@ -7,7 +8,7 @@ export const metadata: Metadata = {
     default: "自行车知识库",
     template: "%s · 自行车知识库",
   },
-  description: "山地、公路、Gravel 等分类，品牌与型号索引，以及骑行选购咨询（Markdown 内容源）。",
+  description: "山地、公路、Gravel 等分类，品牌、车系与车款索引与对比，以及骑行选购咨询。",
 };
 
 export default function RootLayout({
@@ -35,6 +36,15 @@ export default function RootLayout({
               知识条目数据来自仓库{" "}
               <kbd className="kbd kbd-sm align-middle">content/</kbd>{" "}
               下 Markdown；技术栈：Next.js App Router、daisyUI、Tailwind CSS。
+            </p>
+            <p className="text-xs text-base-content/60">
+              <Link href="/certificates/" className="link link-primary font-medium">
+                证书与许可
+              </Link>
+              <span className="mx-2 text-base-content/40">·</span>
+              <span>HTTPS 加密访问</span>
+              <span className="mx-2 text-base-content/40">·</span>
+              <span>工程代码 MIT 开源</span>
             </p>
           </aside>
         </footer>

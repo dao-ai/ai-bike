@@ -1,6 +1,7 @@
 ---
 name: Grail CF
 brand: canyon
+series: grail
 categories:
   - gravel
 year: 2024

@@ -1,6 +1,7 @@
 ---
 name: Roubaix
 brand: specialized
+series: roubaix
 categories:
   - road
 year: 2024

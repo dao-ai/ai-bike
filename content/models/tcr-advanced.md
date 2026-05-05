@@ -1,6 +1,7 @@
 ---
 name: TCR Advanced
 brand: giant
+series: tcr
 categories:
   - road
 year: 2024

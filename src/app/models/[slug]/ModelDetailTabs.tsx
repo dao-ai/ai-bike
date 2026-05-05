@@ -1,42 +1,113 @@
 "use client";
 
+import type { ReactNode } from "react";
 import { useMemo, useState } from "react";
 import { MarkdownBody } from "@/components/MarkdownBody";
+import { SpecAttributesTable } from "@/components/SpecAttributesTable";
 
-type TabId = "overview" | "specs" | "geometry" | "technology";
+type TabId = "overview" | "specs" | "geometry" | "technology" | "classification";
 
 type Props = {
   body: string;
+  specAttributes?: { label: string; value: string }[];
   specsMd?: string;
   geometryMd?: string;
   technologyMd?: string;
+  intendedUse?: string;
 };
 
 function firstTab(p: Props): TabId {
   if (p.body.trim()) return "overview";
-  if (p.specsMd?.trim()) return "specs";
+  if ((p.specAttributes?.length ?? 0) > 0 || (p.specsMd?.trim()?.length ?? 0) > 0) return "specs";
   if (p.geometryMd?.trim()) return "geometry";
-  return "technology";
+  if (p.technologyMd?.trim()) return "technology";
+  if (p.intendedUse?.trim()) return "classification";
+  return "overview";
 }
 
-export function ModelDetailTabs({ body, specsMd, geometryMd, technologyMd }: Props) {
-  const tabs = useMemo(
-    () =>
-      [
-        { id: "overview" as const, label: "概览", md: body },
-        { id: "specs" as const, label: "规格", md: specsMd ?? "" },
-        { id: "geometry" as const, label: "几何", md: geometryMd ?? "" },
-        { id: "technology" as const, label: "技术", md: technologyMd ?? "" },
-      ].filter((t) => t.md.trim()),
-    [body, specsMd, geometryMd, technologyMd],
-  );
+export function ModelDetailTabs({
+  body,
+  specAttributes,
+  specsMd,
+  geometryMd,
+  technologyMd,
+  intendedUse,
+}: Props) {
+  const tabs = useMemo(() => {
+    const rows: { id: TabId; label: string; content: ReactNode }[] = [];
+    if (body.trim()) {
+      rows.push({
+        id: "overview",
+        label: "概览",
+        content: <MarkdownBody markdown={body} />,
+      });
+    }
+    const hasSpecs = (specAttributes?.length ?? 0) > 0 || !!specsMd?.trim();
+    if (hasSpecs) {
+      rows.push({
+        id: "specs",
+        label: "规格",
+        content: (
+          <div className="space-y-8">
+            <SpecAttributesTable items={specAttributes ?? []} />
+            {specsMd?.trim() ? (
+              <section className="not-prose max-w-none">
+                {specAttributes && specAttributes.length > 0 ? (
+                  <h3 className="mb-3 border-b border-base-300 pb-2 text-sm font-bold uppercase tracking-wide text-base-content/70">
+                    补充说明 / 表格
+                  </h3>
+                ) : null}
+                <MarkdownBody markdown={specsMd} />
+              </section>
+            ) : null}
+          </div>
+        ),
+      });
+    }
+    if (geometryMd?.trim()) {
+      rows.push({
+        id: "geometry",
+        label: "几何",
+        content: <MarkdownBody markdown={geometryMd} />,
+      });
+    }
+    if (technologyMd?.trim()) {
+      rows.push({
+        id: "technology",
+        label: "技术",
+        content: <MarkdownBody markdown={technologyMd} />,
+      });
+    }
+    if (intendedUse?.trim()) {
+      rows.push({
+        id: "classification",
+        label: "分类",
+        content: (
+          <div className="space-y-4 text-sm leading-relaxed text-base-content/90">
+            <p>
+              用途 / 强度分类常见于品牌官网车款页底部，用于提示设计取向与适用路况（以下为知识库字段演示）。
+            </p>
+            <p className="rounded-lg border border-base-300 bg-base-200/60 px-4 py-3 font-medium text-base-content">
+              {intendedUse}
+            </p>
+          </div>
+        ),
+      });
+    }
+    return rows;
+  }, [body, specAttributes, specsMd, geometryMd, technologyMd, intendedUse]);
 
-  const [tab, setTab] = useState<TabId>(() => firstTab({ body, specsMd, geometryMd, technologyMd }));
+  const [tab, setTab] = useState<TabId>(() =>
+    firstTab({ body, specAttributes, specsMd, geometryMd, technologyMd, intendedUse }),
+  );
 
   if (tabs.length === 0) {
     return (
       <div className="alert alert-info">
-        <span>暂无详情正文；可在该型号的 Markdown 中补充「概览 / 规格 / 几何 / 技术」区块。</span>
+        <span>
+          暂无详情正文；可在该车款 Markdown 中补充「概览」「specAttributes（规格属性）」「规格 / 几何 /
+          技术」或 intendedUse（分类）等字段。
+        </span>
       </div>
     );
   }
@@ -44,9 +115,7 @@ export function ModelDetailTabs({ body, specsMd, geometryMd, technologyMd }: Pro
   if (tabs.length === 1) {
     return (
       <div className="card border border-base-300 bg-base-100 shadow-sm">
-        <div className="card-body p-5 sm:p-6">
-          <MarkdownBody markdown={tabs[0].md} />
-        </div>
+        <div className="card-body p-5 sm:p-6">{tabs[0].content}</div>
       </div>
     );
   }
@@ -70,9 +139,7 @@ export function ModelDetailTabs({ body, specsMd, geometryMd, technologyMd }: Pro
         ))}
       </div>
       <div className="card mt-3 border border-base-300 bg-base-100 shadow-sm">
-        <div className="card-body p-5 sm:p-6">
-          <MarkdownBody key={active.id} markdown={active.md} />
-        </div>
+        <div className="card-body p-5 sm:p-6">{active.content}</div>
       </div>
     </div>
   );

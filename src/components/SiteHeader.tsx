@@ -4,8 +4,10 @@ import { BicycleIcon } from "@/components/BicycleIcon";
 const nav = [
   { href: "/categories", label: "分类" },
   { href: "/brands", label: "品牌" },
-  { href: "/models", label: "型号" },
+  { href: "/models", label: "车款" },
+  { href: "/compare/", label: "对比" },
   { href: "/consult", label: "咨询" },
+  { href: "/certificates/", label: "证书" },
 ];
 
 export function SiteHeader() {

@@ -1,6 +1,7 @@
 ---
 name: Madone Gen 8
 brand: trek
+series: madone
 categories:
   - road
 year: 2025

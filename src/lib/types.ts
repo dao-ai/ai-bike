@@ -1,3 +1,5 @@
+import type { ParsedGeometry } from "./parseGeometryTable";
+
 export type Category = {
   slug: string;
   name: string;
@@ -17,10 +19,24 @@ export type Brand = {
   body: string;
 };
 
+/** 车系（产品线），其下挂多条具体车款 Model */
+export type Series = {
+  slug: string;
+  name: string;
+  brandSlug: string;
+  categorySlugs: string[];
+  summary: string;
+  body: string;
+  /** 品牌官网该车系筛选/列表页（如美利达 Bikefinder） */
+  officialModelsUrl?: string;
+};
+
 export type Model = {
   slug: string;
   name: string;
   brandSlug: string;
+  /** 所属车系 slug，对应 content/series/<slug>.md */
+  seriesSlug?: string;
   categorySlugs: string[];
   year?: number;
   summary: string;
@@ -34,10 +50,19 @@ export type Model = {
   productUrl?: string;
   /** 尺码建议一句说明 */
   sizesNote?: string;
-  /** 规格表 Markdown（多为表格） */
+  /**
+   * 结构化规格属性（美利达 bikefinder「规格」区块式：部位 + 配置说明）。
+   * 对应 frontmatter `specAttributes` YAML 数组。
+   */
+  specAttributes?: { label: string; value: string }[];
+  /** 用途 / 分类标签（如 INTENDED USE），对应 frontmatter `intendedUse` */
+  intendedUse?: string;
+  /** 规格表 Markdown（可与 specAttributes 并存，作补充表格） */
   specsMd?: string;
   /** 几何表 Markdown */
   geometryMd?: string;
+  /** 由 `geometry` Markdown 表格解析，用于车款页交互示意 */
+  geometryParsed?: ParsedGeometry;
   /** 技术说明 Markdown */
   technologyMd?: string;
 };

@@ -1,6 +1,7 @@
 ---
 name: Tarmac SL8
 brand: specialized
+series: tarmac
 categories:
   - road
 year: 2024

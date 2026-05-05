@@ -4,11 +4,13 @@ import {
   getAllBrands,
   getAllCategories,
   getAllModels,
+  getAllSeries,
 } from "@/lib/content";
 
 export default function Home() {
   const categories = getAllCategories();
   const brands = getAllBrands();
+  const series = getAllSeries();
   const models = getAllModels();
 
   return (
@@ -20,12 +22,10 @@ export default function Home() {
               Bike knowledge
             </div>
             <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
-              分类、品牌、型号与咨询，一站整理
+              分类、品牌、车系、车款与咨询，一站整理
             </h1>
             <p className="mt-4 max-w-2xl text-base leading-relaxed text-base-content/80">
-              本站用 Next.js App Router 搭建，所有条目来自项目根目录{" "}
-              <kbd className="kbd kbd-sm">content/</kbd> 下的 Markdown（frontmatter +
-              正文），直接编辑即可更新站点。
+              查得到、比得明白：从分类、品牌到车系与车款，把选车常用的信息收在一处；内容会慢慢补全，值得你常回来看看。
             </p>
           </div>
           <div className="card mt-8 w-full max-w-2xl border border-base-300 bg-base-100/95 shadow-md backdrop-blur-sm">
@@ -55,13 +55,24 @@ export default function Home() {
                 </div>
                 <div className="stat place-items-center px-4 py-6 text-center sm:py-8">
                   <div className="stat-title text-xs font-semibold uppercase tracking-wider text-base-content/50">
-                    型号
+                    车系
+                  </div>
+                  <div className="stat-value text-primary tabular-nums">
+                    {series.length}
+                  </div>
+                  <div className="stat-desc max-w-[10rem] text-xs leading-snug">
+                    产品线
+                  </div>
+                </div>
+                <div className="stat place-items-center px-4 py-6 text-center sm:py-8">
+                  <div className="stat-title text-xs font-semibold uppercase tracking-wider text-base-content/50">
+                    车款
                   </div>
                   <div className="stat-value text-primary tabular-nums">
                     {models.length}
                   </div>
                   <div className="stat-desc max-w-[10rem] text-xs leading-snug">
-                    车款条目
+                    具体车型
                   </div>
                 </div>
               </div>
@@ -85,9 +96,24 @@ export default function Home() {
               subtitle: "整车厂牌简介与官网入口。",
             },
             {
+              href: "/series",
+              title: "车系浏览",
+              subtitle: "按产品线（车系）进入，再查看旗下具体车款。",
+            },
+            {
               href: "/models",
-              title: "型号库",
-              subtitle: "按品牌与分类筛选的代表车款条目。",
+              title: "车款库",
+              subtitle: "筛选、关键词搜索，勾选最多三辆并排对比。",
+            },
+            {
+              href: "/compare/",
+              title: "车型对比",
+              subtitle: "并排查看品牌、车系、年款与摘要；链接可分享给他人。",
+            },
+            {
+              href: "/certificates/",
+              title: "证书与许可",
+              subtitle: "HTTPS 说明、MIT 开源许可全文与内容/商标声明。",
             },
             {
               href: "/consult",

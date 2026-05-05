@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getBrand, getCategory, getModel, getModelSlugs } from "@/lib/content";
+import {
+  getBrand,
+  getCategory,
+  getModel,
+  getModelSlugs,
+  getSeries,
+} from "@/lib/content";
+import { AddToCompareButton } from "../AddToCompareButton";
+import { ModelGeometryExplorer } from "./ModelGeometryExplorer";
 import { ModelDetailTabs } from "./ModelDetailTabs";
 
 type Props = { params: Promise<{ slug: string }> };
@@ -32,6 +40,7 @@ export default async function ModelDetailPage({ params }: Props) {
   if (!model) notFound();
 
   const brand = getBrand(model.brandSlug);
+  const series = model.seriesSlug ? getSeries(model.seriesSlug) : null;
 
   return (
     <article className="space-y-8">
@@ -41,8 +50,13 @@ export default async function ModelDetailPage({ params }: Props) {
             <Link href="/">首页</Link>
           </li>
           <li>
-            <Link href="/models">型号库</Link>
+            <Link href="/models">车款库</Link>
           </li>
+          {series ? (
+            <li>
+              <Link href={`/series/${series.slug}`}>{series.name}</Link>
+            </li>
+          ) : null}
           <li className="opacity-80">{model.name}</li>
         </ul>
       </div>
@@ -112,8 +126,9 @@ export default async function ModelDetailPage({ params }: Props) {
                 <span className="text-xs opacity-80">↗</span>
               </a>
             ) : null}
+            <AddToCompareButton slug={slug} />
             <Link href="/models" className="btn btn-ghost btn-sm">
-              返回型号库
+              返回车款库
             </Link>
           </div>
         </div>
@@ -161,16 +176,22 @@ export default async function ModelDetailPage({ params }: Props) {
         </span>
       </div>
 
+      {model.geometryParsed && model.geometryParsed.columns.length > 0 ? (
+        <ModelGeometryExplorer modelName={model.name} parsed={model.geometryParsed} />
+      ) : null}
+
       <ModelDetailTabs
         body={model.body}
+        specAttributes={model.specAttributes}
         specsMd={model.specsMd}
         geometryMd={model.geometryMd}
         technologyMd={model.technologyMd}
+        intendedUse={model.intendedUse}
       />
 
       <p className="text-center text-sm text-base-content/60">
         <Link href="/models" className="link link-primary">
-          ← 返回型号库
+          ← 返回车款库
         </Link>
       </p>
     </article>
