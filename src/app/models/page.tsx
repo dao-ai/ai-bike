@@ -11,8 +11,8 @@ export const metadata: Metadata = {
 function ModelsFallback() {
   return (
     <div className="space-y-8">
-      <div className="h-24 animate-pulse rounded-xl bg-[var(--surface-2)]" />
-      <div className="h-40 animate-pulse rounded-xl bg-[var(--surface-2)]" />
+      <div className="skeleton h-24 w-full rounded-box" />
+      <div className="skeleton h-48 w-full rounded-box" />
     </div>
   );
 }

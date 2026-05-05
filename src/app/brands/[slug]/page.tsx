@@ -40,40 +40,43 @@ export default async function BrandDetailPage({ params }: Props) {
             href={brand.site}
             target="_blank"
             rel="noreferrer"
-            className="mt-2 inline-flex text-sm font-medium text-[var(--accent)] underline-offset-4 hover:underline"
+            className="btn btn-primary btn-sm mt-3 gap-2"
           >
-            访问官网（新窗口）
+            访问官网
+            <span className="text-xs opacity-80">↗</span>
           </a>
         ) : null}
       </div>
 
       {brand.body ? (
-        <section className="rounded-xl border border-[var(--edge)] bg-[var(--surface)] p-5 sm:p-6">
-          <MarkdownBody markdown={brand.body} />
+        <section className="card border border-base-300 bg-base-100 shadow-sm">
+          <div className="card-body p-5 sm:p-6">
+            <MarkdownBody markdown={brand.body} />
+          </div>
         </section>
       ) : null}
 
       <section>
         <div className="mb-3 flex flex-wrap items-end justify-between gap-2">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-[var(--muted)]">
+          <h2 className="text-xs font-bold uppercase tracking-wide text-base-content/60">
             示例型号
           </h2>
           <Link
             href={`/models?brand=${slug}`}
-            className="text-sm font-medium text-[var(--accent)] hover:underline"
+            className="link link-primary text-sm font-medium"
           >
             型号库中只看该品牌 →
           </Link>
         </div>
-        <ul className="divide-y divide-[var(--edge)] rounded-xl border border-[var(--edge)] bg-[var(--surface)]">
+        <ul className="divide-y divide-base-300 overflow-hidden rounded-box border border-base-300 bg-base-100 shadow-sm">
           {list.map((m) => (
             <li key={m.slug}>
               <Link
                 href={`/models/${m.slug}`}
-                className="block px-4 py-3 transition hover:bg-[var(--surface-2)]"
+                className="block px-4 py-3 transition-colors hover:bg-base-200"
               >
-                <div className="font-medium">{m.name}</div>
-                <div className="text-sm text-[var(--muted)]">{m.summary}</div>
+                <div className="font-semibold text-base-content">{m.name}</div>
+                <div className="text-sm text-base-content/70">{m.summary}</div>
               </Link>
             </li>
           ))}

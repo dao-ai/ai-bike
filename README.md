@@ -26,7 +26,7 @@
 | **框架** | [Next.js](https://nextjs.org) **16**（App Router、`app/` 目录、`output: "export"` 静态导出至 `out/`） |
 | **UI** | [React](https://react.dev) **19**、[React DOM](https://react.dev) **19** |
 | **语言** | [TypeScript](https://www.typescriptlang.org) **5** |
-| **样式** | [Tailwind CSS](https://tailwindcss.com) **4**（`@tailwindcss/postcss`）、自定义 CSS 变量与 `globals.css` 中的 Markdown 排版类 |
+| **样式与 UI** | [Tailwind CSS](https://tailwindcss.com) **4**（`@tailwindcss/postcss`）、[daisyUI](https://daisyui.com) **5**（`@plugin "daisyui"`，`emerald` / 系统暗色主题）、`globals.css` 中的 Markdown 排版 |
 | **Markdown 元数据** | [gray-matter](https://github.com/jonschlinkert/gray-matter) 解析 YAML frontmatter |
 | **Markdown 渲染** | [react-markdown](https://github.com/remarkjs/react-markdown) + [remark-gfm](https://github.com/remarkjs/remark-gfm)（表格、任务列表等 GFM 语法） |
 | **内容读取** | Node.js 内置 `fs` / `path`，在服务端组件中同步读取 `content/**/*.md` |

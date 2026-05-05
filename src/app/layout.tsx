@@ -16,14 +16,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="zh-CN" className="h-full antialiased">
-      <body className="min-h-full flex flex-col bg-[var(--background)] text-[var(--foreground)]">
+    <html lang="zh-CN" className="scroll-smooth">
+      <body className="flex min-h-screen flex-col bg-base-200 text-base-content antialiased">
         <SiteHeader />
-        <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-10 sm:px-6">
+        <main className="mx-auto w-full max-w-5xl flex-1 px-4 py-8 sm:px-6 sm:py-10">
           {children}
         </main>
-        <footer className="border-t border-[var(--edge)] py-6 text-center text-xs text-[var(--muted)]">
-          内容源：content/**/*.md · Next.js App Router
+        <footer className="footer footer-center border-t border-base-300 bg-base-100 p-6 text-sm text-base-content/60">
+          <aside>
+            <p>内容源：content/**/*.md · Next.js App Router · daisyUI</p>
+          </aside>
         </footer>
       </body>
     </html>

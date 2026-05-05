@@ -36,12 +36,9 @@ export default async function ModelDetailPage({ params }: Props) {
   return (
     <article className="space-y-8">
       <div>
-        <p className="text-sm text-[var(--muted)]">
+        <p className="text-sm text-base-content/70">
           {brand ? (
-            <Link
-              href={`/brands/${brand.slug}`}
-              className="font-medium text-[var(--accent)] hover:underline"
-            >
+            <Link href={`/brands/${brand.slug}`} className="link link-primary font-medium">
               {brand.name}
             </Link>
           ) : (
@@ -51,8 +48,10 @@ export default async function ModelDetailPage({ params }: Props) {
             <span className="before:mx-2 before:content-['·']">{model.year}</span>
           ) : null}
         </p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight">{model.name}</h1>
-        <p className="mt-3 max-w-2xl text-[var(--muted)]">{model.summary}</p>
+        <h1 className="mt-2 text-3xl font-bold tracking-tight text-base-content sm:text-4xl">
+          {model.name}
+        </h1>
+        <p className="mt-3 max-w-2xl text-base-content/80">{model.summary}</p>
       </div>
 
       <div className="flex flex-wrap gap-2">
@@ -63,7 +62,7 @@ export default async function ModelDetailPage({ params }: Props) {
             <Link
               key={cs}
               href={`/categories/${cs}`}
-              className="rounded-full border border-[var(--edge)] bg-[var(--surface-2)] px-3 py-1 text-sm hover:border-[var(--accent)]/50"
+              className="badge badge-lg badge-outline border-primary/40 hover:border-primary"
             >
               {cat.name}
             </Link>
@@ -72,18 +71,18 @@ export default async function ModelDetailPage({ params }: Props) {
       </div>
 
       {model.body.trim() ? (
-        <section className="rounded-xl border border-[var(--edge)] bg-[var(--surface)] p-5 sm:p-6">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-[var(--muted)]">
-            详情说明
-          </h2>
-          <div className="mt-3">
+        <section className="card border border-base-300 bg-base-100 shadow-sm">
+          <div className="card-body p-5 sm:p-6">
+            <h2 className="mb-3 text-xs font-bold uppercase tracking-wide text-base-content/60">
+              详情说明
+            </h2>
             <MarkdownBody markdown={model.body} />
           </div>
         </section>
       ) : null}
 
-      <p className="text-sm text-[var(--muted)]">
-        <Link href="/models" className="text-[var(--accent)] hover:underline">
+      <p className="text-sm text-base-content/70">
+        <Link href="/models" className="link link-primary">
           ← 返回型号库
         </Link>
       </p>

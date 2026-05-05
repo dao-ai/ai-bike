@@ -11,16 +11,16 @@ export function CardGrid({
         <li key={item.href}>
           <Link
             href={item.href}
-            className="block h-full rounded-xl border border-[var(--edge)] bg-[var(--surface)] p-5 shadow-sm transition hover:border-[var(--accent)]/40 hover:shadow-md"
+            className="card border border-base-300 bg-base-100 shadow-md transition-all duration-200 hover:border-primary/40 hover:shadow-xl"
           >
-            <h2 className="text-lg font-medium text-[var(--foreground)]">
-              {item.title}
-            </h2>
-            {item.subtitle ? (
-              <p className="mt-2 text-sm leading-relaxed text-[var(--muted)]">
-                {item.subtitle}
-              </p>
-            ) : null}
+            <div className="card-body p-5 sm:p-6">
+              <h2 className="card-title text-lg text-base-content">{item.title}</h2>
+              {item.subtitle ? (
+                <p className="text-sm leading-relaxed text-base-content/70">
+                  {item.subtitle}
+                </p>
+              ) : null}
+            </div>
           </Link>
         </li>
       ))}

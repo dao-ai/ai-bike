@@ -12,39 +12,47 @@ export default function Home() {
   const models = getAllModels();
 
   return (
-    <div className="space-y-14">
-      <section className="rounded-2xl border border-[var(--edge)] bg-[var(--surface)] p-8 shadow-sm sm:p-10">
-        <p className="text-sm font-medium text-[var(--accent)]">Bike knowledge</p>
-        <h1 className="mt-2 text-3xl font-semibold tracking-tight sm:text-4xl">
-          分类、品牌、型号与咨询，一站整理
-        </h1>
-        <p className="mt-4 max-w-2xl text-base leading-relaxed text-[var(--muted)]">
-          本站用 Next.js App Router 搭建，所有条目来自项目根目录{" "}
-          <code className="rounded bg-[var(--surface-2)] px-1.5 py-0.5 font-mono text-sm">
-            content/
-          </code>{" "}
-          下的 Markdown（frontmatter + 正文），直接编辑即可更新站点。
-        </p>
-        <dl className="mt-8 grid gap-4 sm:grid-cols-3">
-          <div className="rounded-lg bg-[var(--surface-2)] px-4 py-3">
-            <dt className="text-xs text-[var(--muted)]">分类</dt>
-            <dd className="text-2xl font-semibold tabular-nums">
-              {categories.length}
-            </dd>
+    <div className="space-y-12">
+      <div className="hero rounded-box border border-base-300 bg-gradient-to-br from-primary/15 via-base-100 to-base-200 shadow-lg">
+        <div className="hero-content w-full max-w-none flex-col items-start px-6 py-10 text-left sm:px-10 sm:py-12">
+          <div className="max-w-2xl">
+            <div className="badge badge-primary badge-outline mb-3 font-medium">
+              Bike knowledge
+            </div>
+            <h1 className="text-3xl font-bold tracking-tight sm:text-4xl md:text-5xl">
+              分类、品牌、型号与咨询，一站整理
+            </h1>
+            <p className="mt-4 max-w-2xl text-base leading-relaxed text-base-content/80">
+              本站用 Next.js App Router 搭建，所有条目来自项目根目录{" "}
+              <kbd className="kbd kbd-sm">content/</kbd> 下的 Markdown（frontmatter +
+              正文），直接编辑即可更新站点。
+            </p>
           </div>
-          <div className="rounded-lg bg-[var(--surface-2)] px-4 py-3">
-            <dt className="text-xs text-[var(--muted)]">品牌</dt>
-            <dd className="text-2xl font-semibold tabular-nums">{brands.length}</dd>
+          <div className="stats stats-vertical mt-8 w-full max-w-2xl shadow-sm sm:stats-horizontal">
+            <div className="stat border border-base-300 bg-base-100 place-items-start rounded-box px-6 py-4">
+              <div className="stat-title text-xs uppercase tracking-wide">
+                分类
+              </div>
+              <div className="stat-value text-primary">{categories.length}</div>
+            </div>
+            <div className="stat border border-base-300 bg-base-100 place-items-start rounded-box px-6 py-4">
+              <div className="stat-title text-xs uppercase tracking-wide">
+                品牌
+              </div>
+              <div className="stat-value text-primary">{brands.length}</div>
+            </div>
+            <div className="stat border border-base-300 bg-base-100 place-items-start rounded-box px-6 py-4">
+              <div className="stat-title text-xs uppercase tracking-wide">
+                型号
+              </div>
+              <div className="stat-value text-primary">{models.length}</div>
+            </div>
           </div>
-          <div className="rounded-lg bg-[var(--surface-2)] px-4 py-3">
-            <dt className="text-xs text-[var(--muted)]">型号</dt>
-            <dd className="text-2xl font-semibold tabular-nums">{models.length}</dd>
-          </div>
-        </dl>
-      </section>
+        </div>
+      </div>
 
       <section>
-        <h2 className="mb-4 text-lg font-semibold">快速入口</h2>
+        <h2 className="mb-4 text-lg font-bold text-base-content">快速入口</h2>
         <CardGrid
           items={[
             {
@@ -71,30 +79,20 @@ export default function Home() {
         />
       </section>
 
-      <section className="rounded-xl border border-dashed border-[var(--edge)] p-6 text-sm text-[var(--muted)]">
-        <p>
-          本地开发：在项目目录执行{" "}
-          <code className="rounded bg-[var(--surface-2)] px-1.5 py-0.5 font-mono text-[var(--foreground)]">
-            npm run dev
-          </code>
-          ；静态站点构建执行{" "}
-          <code className="rounded bg-[var(--surface-2)] px-1.5 py-0.5 font-mono text-[var(--foreground)]">
-            npm run build
-          </code>
-          （产物在{" "}
-          <code className="rounded bg-[var(--surface-2)] px-1.5 py-0.5 font-mono text-[var(--foreground)]">
-            out/
-          </code>
-          ）。公开站点见{" "}
+      <div className="alert border border-dashed border-base-300 bg-base-100 shadow-sm">
+        <span className="text-sm text-base-content/80">
+          本地开发执行 <kbd className="kbd kbd-sm">npm run dev</kbd>
+          ；静态构建执行 <kbd className="kbd kbd-sm">npm run build</kbd>（产物在{" "}
+          <kbd className="kbd kbd-sm">out/</kbd>）。线上预览：{" "}
           <Link
-            className="font-medium text-[var(--accent)] underline-offset-2 hover:underline"
+            className="link link-primary font-medium"
             href="https://dao-ai.github.io/ai-bike/"
           >
             GitHub Pages
           </Link>
           。
-        </p>
-      </section>
+        </span>
+      </div>
     </div>
   );
 }

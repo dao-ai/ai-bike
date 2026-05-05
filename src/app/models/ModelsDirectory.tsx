@@ -44,11 +44,7 @@ export function ModelsDirectory({ categories, brands, models }: Props) {
     <Link
       key={key}
       href={href}
-      className={`rounded-full border px-3 py-1 text-sm transition ${
-        active
-          ? "border-[var(--accent)] bg-[var(--accent)]/15 font-medium text-[var(--foreground)]"
-          : "border-[var(--edge)] bg-[var(--surface)] text-[var(--muted)] hover:border-[var(--accent)]/50"
-      }`}
+      className={`btn btn-sm ${active ? "btn-primary" : "btn-outline border-base-300 text-base-content/80"}`}
     >
       {label}
     </Link>
@@ -61,60 +57,64 @@ export function ModelsDirectory({ categories, brands, models }: Props) {
         description="通过查询参数筛选；每条对应 content/models 下的一个 Markdown 文件。"
       />
 
-      <div className="space-y-4 rounded-xl border border-[var(--edge)] bg-[var(--surface)] p-4 sm:p-5">
-        <div>
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">
-            分类
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {chip("全部", !category, hrefModels({ brand }), "c-all")}
-            {categories.map((c) =>
-              chip(
-                c.name,
-                category === c.slug,
-                hrefModels({ category: c.slug, brand }),
-                `c-${c.slug}`,
-              ),
-            )}
+      <div className="card border border-base-300 bg-base-100 shadow-sm">
+        <div className="card-body gap-6 p-4 sm:p-6">
+          <div>
+            <p className="mb-2 text-xs font-bold uppercase tracking-wide text-base-content/60">
+              分类
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {chip("全部", !category, hrefModels({ brand }), "c-all")}
+              {categories.map((c) =>
+                chip(
+                  c.name,
+                  category === c.slug,
+                  hrefModels({ category: c.slug, brand }),
+                  `c-${c.slug}`,
+                ),
+              )}
+            </div>
           </div>
-        </div>
-        <div>
-          <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--muted)]">
-            品牌
-          </p>
-          <div className="flex flex-wrap gap-2">
-            {chip("全部", !brand, hrefModels({ category }), "b-all")}
-            {brands.map((b) =>
-              chip(
-                b.name,
-                brand === b.slug,
-                hrefModels({ category, brand: b.slug }),
-                `b-${b.slug}`,
-              ),
-            )}
+          <div>
+            <p className="mb-2 text-xs font-bold uppercase tracking-wide text-base-content/60">
+              品牌
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {chip("全部", !brand, hrefModels({ category }), "b-all")}
+              {brands.map((b) =>
+                chip(
+                  b.name,
+                  brand === b.slug,
+                  hrefModels({ category, brand: b.slug }),
+                  `b-${b.slug}`,
+                ),
+              )}
+            </div>
           </div>
         </div>
       </div>
 
       {list.length === 0 ? (
-        <p className="rounded-xl border border-dashed border-[var(--edge)] bg-[var(--surface)] py-12 text-center text-sm text-[var(--muted)]">
-          当前筛选下没有条目，请调整分类或品牌。
-        </p>
+        <div className="alert border border-dashed border-base-300 bg-base-100 text-base-content/70">
+          <span>当前筛选下没有条目，请调整分类或品牌。</span>
+        </div>
       ) : (
-        <ul className="divide-y divide-[var(--edge)] rounded-xl border border-[var(--edge)] bg-[var(--surface)]">
+        <ul className="divide-y divide-base-300 overflow-hidden rounded-box border border-base-300 bg-base-100 shadow-sm">
           {list.map((m) => (
             <li key={m.slug}>
               <Link
                 href={`/models/${m.slug}`}
-                className="block px-4 py-4 transition hover:bg-[var(--surface-2)]"
+                className="block px-4 py-4 transition-colors hover:bg-base-200"
               >
                 <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <span className="text-lg font-medium">{m.name}</span>
+                  <span className="text-lg font-semibold text-base-content">
+                    {m.name}
+                  </span>
                   {m.year ? (
-                    <span className="text-sm text-[var(--muted)]">{m.year}</span>
+                    <span className="badge badge-ghost">{m.year}</span>
                   ) : null}
                 </div>
-                <p className="mt-1 text-sm text-[var(--muted)]">{m.summary}</p>
+                <p className="mt-1 text-sm text-base-content/70">{m.summary}</p>
               </Link>
             </li>
           ))}

@@ -37,26 +37,23 @@ export default async function CategoryDetailPage({ params }: Props) {
       <SectionTitle title={cat.name} description={cat.summary} />
 
       <section>
-        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-[var(--muted)]">
+        <h2 className="mb-3 text-xs font-bold uppercase tracking-wide text-base-content/60">
           常见子类型
         </h2>
-        <ul className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2">
           {cat.subtypes.map((s) => (
-            <li
-              key={s}
-              className="rounded-full border border-[var(--edge)] bg-[var(--surface)] px-3 py-1 text-sm"
-            >
+            <span key={s} className="badge badge-lg badge-outline border-base-300">
               {s}
-            </li>
+            </span>
           ))}
-        </ul>
+        </div>
       </section>
 
       <section>
-        <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-[var(--muted)]">
+        <h2 className="mb-3 text-xs font-bold uppercase tracking-wide text-base-content/60">
           实用提示
         </h2>
-        <ul className="list-inside list-disc space-y-2 text-[var(--muted)]">
+        <ul className="list-inside list-disc space-y-2 text-base-content/80">
           {cat.tips.map((t) => (
             <li key={t}>{t}</li>
           ))}
@@ -64,38 +61,37 @@ export default async function CategoryDetailPage({ params }: Props) {
       </section>
 
       {cat.body ? (
-        <section className="rounded-xl border border-[var(--edge)] bg-[var(--surface)] p-5 sm:p-6">
-          <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-[var(--muted)]">
-            扩展阅读
-          </h2>
-          <MarkdownBody markdown={cat.body} />
+        <section className="card border border-base-300 bg-base-100 shadow-sm">
+          <div className="card-body p-5 sm:p-6">
+            <h2 className="mb-3 text-xs font-bold uppercase tracking-wide text-base-content/60">
+              扩展阅读
+            </h2>
+            <MarkdownBody markdown={cat.body} />
+          </div>
         </section>
       ) : null}
 
       <section>
         <div className="mb-3 flex flex-wrap items-end justify-between gap-2">
-          <h2 className="text-sm font-semibold uppercase tracking-wide text-[var(--muted)]">
+          <h2 className="text-xs font-bold uppercase tracking-wide text-base-content/60">
             相关型号
           </h2>
-          <Link
-            href={`/models?category=${slug}`}
-            className="text-sm font-medium text-[var(--accent)] hover:underline"
-          >
+          <Link href={`/models?category=${slug}`} className="link link-primary text-sm font-medium">
             在型号库中筛选 →
           </Link>
         </div>
         {related.length === 0 ? (
-          <p className="text-sm text-[var(--muted)]">暂无关联示例型号。</p>
+          <p className="text-sm text-base-content/60">暂无关联示例型号。</p>
         ) : (
-          <ul className="divide-y divide-[var(--edge)] rounded-xl border border-[var(--edge)] bg-[var(--surface)]">
+          <ul className="divide-y divide-base-300 overflow-hidden rounded-box border border-base-300 bg-base-100 shadow-sm">
             {related.map((m) => (
               <li key={m.slug}>
                 <Link
                   href={`/models/${m.slug}`}
-                  className="flex flex-col gap-1 px-4 py-3 transition hover:bg-[var(--surface-2)] sm:flex-row sm:items-center sm:justify-between"
+                  className="flex flex-col gap-1 px-4 py-3 transition-colors hover:bg-base-200 sm:flex-row sm:items-center sm:justify-between"
                 >
-                  <span className="font-medium">{m.name}</span>
-                  <span className="text-sm text-[var(--muted)]">{m.summary}</span>
+                  <span className="font-semibold text-base-content">{m.name}</span>
+                  <span className="text-sm text-base-content/70">{m.summary}</span>
                 </Link>
               </li>
             ))}
