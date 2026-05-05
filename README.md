@@ -67,6 +67,7 @@
 content/
 ├── brands/       # 品牌，如 trek.md
 ├── categories/   # 车型分类，如 road.md
+├── series/       # 车系（产品线），如 scultura.md
 ├── models/       # 具体型号，如 tarmac-sl8.md
 └── consult/      # 咨询条目，如 c1.md
 ```
@@ -135,3 +136,12 @@ $env:GITHUB_ACTIONS="true"; $env:GITHUB_REPOSITORY="dao-ai/ai-bike"; npm run bui
 ## 仓库
 
 远程示例：`git@github.com:dao-ai/ai-bike.git`（以你实际配置的 `origin` 为准）。
+
+---
+
+## 更多文档
+
+| 文档 | 说明 |
+|------|------|
+| [CONTRIBUTING.md](./CONTRIBUTING.md) | 贡献方式：内容约定、代码与 PR 流程 |
+| [RELEASING.md](./RELEASING.md) | 发布与版本号：构建检查、`npm version`、标签与 GitHub Pages |
