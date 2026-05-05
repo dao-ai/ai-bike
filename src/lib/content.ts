@@ -27,6 +27,12 @@ function asStringArray(v: unknown): string[] {
   return [];
 }
 
+function optionalTrimmedString(v: unknown): string | undefined {
+  if (v == null) return undefined;
+  const s = String(v).trim();
+  return s ? s : undefined;
+}
+
 function parseCategory(slug: string, raw: string): Category {
   const { data, content } = matter(raw);
   return {
@@ -61,6 +67,13 @@ function parseModel(slug: string, raw: string): Model {
     year: typeof data.year === "number" ? data.year : undefined,
     summary: String(data.summary ?? ""),
     body: String(content ?? "").trim(),
+    highlights: asStringArray(data.highlights),
+    msrp: optionalTrimmedString(data.msrp),
+    productUrl: optionalTrimmedString(data.productUrl),
+    sizesNote: optionalTrimmedString(data.sizesNote),
+    specsMd: optionalTrimmedString(data.specs),
+    geometryMd: optionalTrimmedString(data.geometry),
+    technologyMd: optionalTrimmedString(data.technology),
   };
 }
 

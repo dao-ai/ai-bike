@@ -11,7 +11,7 @@
 | **首页** | `/` | 展示分类 / 品牌 / 型号数量，提供各栏目的快速入口 |
 | **车型分类** | `/categories`、`/categories/[slug]` | 山地、公路、Gravel、城市、电助力等分类说明；支持子类型、要点列表与正文 Markdown |
 | **品牌** | `/brands`、`/brands/[slug]` | 品牌简介、国家、可选官网链接；可关联该品牌下的型号 |
-| **型号库** | `/models`、`/models/[slug]` | 车款条目：关联品牌与多个分类、年份、摘要与正文；列表页可按分类或品牌筛选 |
+| **型号库** | `/models`、`/models/[slug]` | 车款条目：品牌/分类/年份/摘要 + 可选「要点、零售价、原厂链接、尺码提示」；正文支持 **概览 / 规格 / 几何 / 技术** 分区（见 `src/lib/types.ts` 中 `Model` 与示例 `content/models/one-sixty-500.md`） |
 | **咨询与问答** | `/consult` | 常见问题式条目：问题、标签、关联型号与分类，正文为 Markdown |
 | **404** | 自定义 `not-found` | 未命中路由时的友好提示 |
 
@@ -71,7 +71,7 @@ content/
 └── consult/      # 咨询条目，如 c1.md
 ```
 
-各文件的 frontmatter 字段约定见 `src/lib/types.ts` 与 `src/lib/content.ts` 中的解析逻辑。
+各文件的 frontmatter 字段约定见 `src/lib/types.ts` 与 `src/lib/content.ts` 中的解析逻辑。型号详情页信息架构参考常见品牌官网车款页（如 [MERIDA 美利达](https://www.merida.cn/)），**不抓取、不镜像**第三方站点内容；表格与长文由维护者自行编写或标注为占位说明。
 
 ---
 
