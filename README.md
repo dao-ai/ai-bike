@@ -13,6 +13,7 @@
 | **品牌** | `/brands`、`/brands/[slug]` | 品牌简介、国家、可选官网链接；可关联该品牌下的型号 |
 | **型号库** | `/models`、`/models/[slug]` | 车款条目：品牌/分类/年份/摘要 + 可选「要点、零售价、原厂链接、尺码提示」；正文支持 **概览 / 规格 / 几何 / 技术** 分区（见 `src/lib/types.ts` 中 `Model` 与示例 `content/models/one-sixty-500.md`） |
 | **咨询与问答** | `/consult` | 常见问题式条目：问题、标签、关联型号与分类，正文为 Markdown |
+| **更新日志** | `/changelog` | 渲染根目录 `CHANGELOG.md`，与页脚版本号同源（`package.json` 的 `version`） |
 | **404** | 自定义 `not-found` | 未命中路由时的友好提示 |
 
 **内容维护方式**：在 `content/` 下对应子目录新增或编辑 `.md` 文件即可；frontmatter 字段由 `src/lib/content.ts` 解析（如 `order` 控制列表排序）。无需数据库。
@@ -145,3 +146,4 @@ $env:GITHUB_ACTIONS="true"; $env:GITHUB_REPOSITORY="dao-ai/ai-bike"; npm run bui
 |------|------|
 | [CONTRIBUTING.md](./CONTRIBUTING.md) | 贡献方式：内容约定、代码与 PR 流程 |
 | [RELEASING.md](./RELEASING.md) | 发布与版本号：构建检查、`npm version`、标签与 GitHub Pages |
+| [CHANGELOG.md](./CHANGELOG.md) | 版本变更记录；线上 [更新日志](https://dao-ai.github.io/ai-bike/changelog/) 同源渲染 |

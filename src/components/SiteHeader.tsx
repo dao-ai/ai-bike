@@ -7,7 +7,6 @@ const nav = [
   { href: "/models", label: "车款" },
   { href: "/compare/", label: "对比" },
   { href: "/consult", label: "咨询" },
-  { href: "/certificates/", label: "证书" },
 ];
 
 export function SiteHeader() {

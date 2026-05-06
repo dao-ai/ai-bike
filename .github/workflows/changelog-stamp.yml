@@ -1,0 +1,44 @@
+# 当默认分支上出现「仅因发版等原因修改了 package.json」的推送时，
+# 尝试在 CHANGELOG.md 中插入当前版本的草稿节（与 npm run changelog:release 相同逻辑）。
+# 若该版本已存在或脚本未产生变更，则不会提交。
+# 注意：向受保护分支推送需仓库策略允许 GITHUB_TOKEN 写入，否则请在本机运行 changelog:release。
+
+name: Stamp changelog
+
+on:
+  push:
+    branches:
+      - master
+      - main
+    paths:
+      - "package.json"
+
+jobs:
+  stamp:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+
+      - name: Insert changelog draft for current version
+        run: node scripts/changelog-release.mjs
+
+      - name: Commit and push if CHANGELOG.md changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet CHANGELOG.md; then
+            echo "No CHANGELOG changes to commit."
+            exit 0
+          fi
+          git add CHANGELOG.md
+          VERSION="$(node -p "require('./package.json').version")"
+          git commit -m "chore(changelog): stamp release v${VERSION}"
+          git push

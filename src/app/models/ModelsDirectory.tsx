@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import { SectionTitle } from "@/components/SectionTitle";
 import { buildCompareHref, MAX_COMPARE_MODELS } from "@/lib/compareUtils";
@@ -14,20 +14,26 @@ type Props = {
   models: Model[];
 };
 
-function hrefModels(opts: { category?: string; brand?: string }) {
+function hrefModels(opts: { category?: string; brand?: string; q?: string }) {
   const q = new URLSearchParams();
   if (opts.category) q.set("category", opts.category);
   if (opts.brand) q.set("brand", opts.brand);
+  if (opts.q?.trim()) q.set("q", opts.q.trim());
   const s = q.toString();
-  return s ? `/models?${s}` : "/models";
+  return s ? `/models/?${s}` : "/models/";
 }
 
 export function ModelsDirectory({ categories, brands, models }: Props) {
   const sp = useSearchParams();
   const category = sp.get("category") ?? undefined;
   const brand = sp.get("brand") ?? undefined;
+  const qFromUrl = sp.get("q") ?? "";
 
-  const [q, setQ] = useState("");
+  const [q, setQ] = useState(qFromUrl);
+
+  useEffect(() => {
+    setQ(qFromUrl);
+  }, [qFromUrl]);
   const [comparePick, setComparePick] = useState<Set<string>>(() => new Set());
 
   const baseList = useMemo(
@@ -105,12 +111,12 @@ export function ModelsDirectory({ categories, brands, models }: Props) {
               分类
             </p>
             <div className="flex flex-wrap gap-2">
-              {chip("全部", !category, hrefModels({ brand }), "c-all")}
+              {chip("全部", !category, hrefModels({ brand, q }), "c-all")}
               {categories.map((c) =>
                 chip(
                   c.name,
                   category === c.slug,
-                  hrefModels({ category: c.slug, brand }),
+                  hrefModels({ category: c.slug, brand, q }),
                   `c-${c.slug}`,
                 ),
               )}
@@ -121,12 +127,12 @@ export function ModelsDirectory({ categories, brands, models }: Props) {
               品牌
             </p>
             <div className="flex flex-wrap gap-2">
-              {chip("全部", !brand, hrefModels({ category }), "b-all")}
+              {chip("全部", !brand, hrefModels({ category, q }), "b-all")}
               {brands.map((b) =>
                 chip(
                   b.name,
                   brand === b.slug,
-                  hrefModels({ category, brand: b.slug }),
+                  hrefModels({ category, brand: b.slug, q }),
                   `b-${b.slug}`,
                 ),
               )}

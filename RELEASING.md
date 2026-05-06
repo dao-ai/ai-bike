@@ -56,10 +56,20 @@ npm version major --no-git-tag-version   # 1.0.0
 
 该命令会同步更新 `package.json` 与 `package-lock.json`。
 
+### 2b.（推荐）预填 Changelog 草稿
+
+在提交版本号**之前或之后**于仓库根目录执行：
+
+```bash
+npm run changelog:release
+```
+
+该脚本会在 `CHANGELOG.md` 的 **`## [Unreleased]`** 与下一节之间插入 **`## [当前 version]`** 草稿（含最近 `git log` 列表）。若该版本标题已存在则跳过。推送后 **GitHub Actions**（`.github/workflows/changelog-stamp.yml`）也会在 **仅变更 `package.json`** 的推送上尝试执行同一逻辑并提交 `CHANGELOG.md`（需仓库允许 `GITHUB_TOKEN` 写入默认分支；若受分支保护阻止，请在本机运行脚本后随版本一起提交）。
+
 ### 3. 提交并推送
 
 ```bash
-git add package.json package-lock.json
+git add package.json package-lock.json CHANGELOG.md
 git commit -m "chore: bump version to x.y.z"
 git push origin master
 ```
@@ -83,13 +93,10 @@ git push origin vx.y.z
 
 ## 变更说明（Changelog）
 
-当前未强制维护 `CHANGELOG.md`。建议在 **GitHub Release 正文** 或合并 PR 时写清：
-
-- 用户可见变化（新页面、内容栏目、修复的问题）
-- 破坏性变更（若有）
-- 内容维护者需注意的 frontmatter 或路径变更
-
-若日后引入 `CHANGELOG.md`，可采用 [Keep a Changelog](https://keepachangelog.com/) 格式。
+- **文件**：根目录 [CHANGELOG.md](./CHANGELOG.md)，格式参考 [Keep a Changelog](https://keepachangelog.com/zh-CN/1.0.0/)。
+- **站内页**：构建后访问路径 **`/changelog/`**（与页脚「更新日志」链接一致）。
+- **日常**：可在 **`## [Unreleased]`** 下直接写 Added / Changed / Fixed；发版前将 **`npm run changelog:release`** 生成的 **`## [x.y.z]`** 草稿整理为正式条目（删除机器生成的 `git log` 块或改写为面向读者的说明）。
+- **GitHub Release**：仍可在 Release 正文中摘录要点，与 `CHANGELOG.md` 互补。
 
 ---
 

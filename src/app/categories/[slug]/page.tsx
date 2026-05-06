@@ -41,11 +41,18 @@ export default async function CategoryDetailPage({ params }: Props) {
           常见子类型
         </h2>
         <div className="flex flex-wrap gap-2">
-          {cat.subtypes.map((s) => (
-            <span key={s} className="badge badge-lg badge-outline border-base-300">
-              {s}
-            </span>
-          ))}
+          {cat.subtypes.map((s) => {
+            const q = new URLSearchParams({ category: slug, q: s }).toString();
+            return (
+              <Link
+                key={s}
+                href={`/models/?${q}`}
+                className="badge badge-lg badge-outline border-base-300 transition-colors hover:border-primary hover:bg-primary/5"
+              >
+                {s}
+              </Link>
+            );
+          })}
         </div>
       </section>
 
@@ -76,7 +83,7 @@ export default async function CategoryDetailPage({ params }: Props) {
           <h2 className="text-xs font-bold uppercase tracking-wide text-base-content/60">
             相关型号
           </h2>
-          <Link href={`/models?category=${slug}`} className="link link-primary text-sm font-medium">
+          <Link href={`/models/?category=${encodeURIComponent(slug)}`} className="link link-primary text-sm font-medium">
             在型号库中筛选 →
           </Link>
         </div>
